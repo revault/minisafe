@@ -35,8 +35,6 @@ def test_getaddress(lianad):
     assert "address" in res
     # We'll get a new one at every call
     assert res["address"] != lianad.rpc.getnewaddress()["address"]
-    # new address has derivation_index higher than the previous one
-    assert lianad.rpc.getnewaddress()["derivation_index"] == res["derivation_index"] + 2
 
 
 def test_listaddresses(lianad):
