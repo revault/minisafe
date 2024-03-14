@@ -2,7 +2,10 @@
 //!
 //! We use the RPC interface and a watchonly descriptor wallet.
 
+// FIXME(vincenzopalazzo): move this outside of the bitcoind crate
+pub(crate) mod nakamoto;
 mod utils;
+
 use crate::{
     bitcoin::{Block, BlockChainTip},
     config,
@@ -62,6 +65,7 @@ pub enum BitcoindError {
     NetworkMismatch(String /*config*/, String /*bitcoind*/),
     StartRescan,
     RescanPastPruneHeight,
+    GenericError,
 }
 
 impl BitcoindError {
@@ -154,7 +158,8 @@ impl std::fmt::Display for BitcoindError {
                     f,
                     "Trying to rescan the block chain past the prune block height."
                 )
-            }
+            },
+            BitcoindError::GenericError => write!(f, "Generic error"),
         }
     }
 }
